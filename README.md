@@ -159,7 +159,9 @@ beya/
 ├── manifest.json
 ├── sw.js
 └── README.md
-Keeping the project separated into smaller files makes Beya easier to maintain, debug, and expand.
+
+
+ Keeping the project separated into smaller files makes Beya easier to maintain, debug, and expand.
 📦 Installation
 Web
 Open the Beya web version in a supported browser.
