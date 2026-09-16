@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Beya — More than a clock."
+    >
+
+    <meta name="theme-color" content="#ffffff">
+
+    <title>Beya — More than a clock.</title>
+
+    <!-- Beya styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/glass.css">
+    <link rel="stylesheet" href="css/setup.css">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- App icon -->
+    <link rel="icon" href="assets/icons/beya.png" type="image/png">
+</head>
+
+<body>
+
+    <!-- =========================================
+         BEYA APPLICATION
+         ========================================= -->
+
+    <div id="beya-app">
+
+        <!-- =====================================
+             LOCK SCREEN
+             ===================================== -->
+
+        <section id="lock-screen" class="screen lock-screen">
+
+            <div class="lock-content glass-panel">
+
+                <div class="lock-brand">
+                    <span class="lock-brand-name">Beya</span>
+                    <span class="lock-brand-tagline">
+                        More than a clock.
+                    </span>
+                </div>
+
+                <div id="lock-clock" class="lock-clock">
+                    00:00
+                </div>
+
+                <div id="lock-date" class="lock-date">
+                    Loading date...
+                </div>
+
+                <button
+                    id="unlock-button"
+                    class="glass-button primary-button"
+                    type="button"
+                >
+                    Swipe up to open
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MAIN APP
+             ===================================== -->
+
+        <main id="main-app" class="screen main-screen hidden">
+
+            <!-- =================================
+                 TOP BAR
+                 ================================= -->
+
+            <header id="top-bar" class="top-bar glass-panel">
+
+                <div class="brand-area">
+                    <button
+                        id="menu-button"
+                        class="icon-button"
+                        type="button"
+                        aria-label="Open menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div class="brand-text">
+                        <span class="brand-name">Beya</span>
+                    </div>
+                </div>
+
+                <div class="top-bar-actions">
+
+                    <button
+                        id="ai-button"
+                        class="icon-button"
+                        type="button"
+                        aria-label="Open Beya AI"
+                    >
+                        AI
+                    </button>
+
+                    <button
+                        id="settings-button"
+                        class="icon-button"
+                        type="button"
+                        aria-label="Open settings"
+                    >
+                        ⚙
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================
+                 CLOCK AREA
+                 ================================= -->
+
+            <section id="clock-section" class="clock-section">
+
+                <div
+                    id="main-clock"
+                    class="main-clock"
+                    aria-live="polite"
+                >
+                    00:00:00
+                </div>
+
+                <div
+                    id="main-date"
+                    class="main-date"
+                >
+                    Loading date...
+                </div>
+
+                <div
+                    id="clock-location"
+                    class="clock-location"
+                >
+                    Local Time
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 QUICK ACTIONS
+                 ================================= -->
+
+            <section
+                id="quick-actions"
+                class="quick-actions glass-panel"
+                aria-label="Quick actions"
+            >
+
+                <button
+                    id="quick-alarm"
+                    class="quick-action"
+                    type="button"
+                >
+                    <span class="quick-action-icon">🔔</span>
+                    <span class="quick-action-label">Alarm</span>
+                </button>
+
+                <button
+                    id="quick-timer"
+                    class="quick-action"
+                    type="button"
+                >
+                    <span class="quick-action-icon">⏱</span>
+                    <span class="quick-action-label">Timer</span>
+                </button>
+
+                <button
+                    id="quick-stopwatch"
+                    class="quick-action"
+                    type="button"
+                >
+                    <span class="quick-action-icon">⏱</span>
+                    <span class="quick-action-label">Stopwatch</span>
+                </button>
+
+                <button
+                    id="quick-reminder"
+                    class="quick-action"
+                    type="button"
+                >
+                    <span class="quick-action-icon">📅</span>
+                    <span class="quick-action-label">Reminder</span>
+                </button>
+
+            </section>
+
+
+            <!-- =================================
+                 DYNAMIC CONTENT
+                 ================================= -->
+
+            <section
+                id="content-area"
+                class="content-area"
+            >
+
+                <!-- Alarm panel -->
+                <div
+                    id="alarms-panel"
+                    class="app-panel glass-panel hidden"
+                >
+                    <h2>Alarms</h2>
+                    <div id="alarms-list"></div>
+                </div>
+
+
+                <!-- Timer panel -->
+                <div
+                    id="timer-panel"
+                    class="app-panel glass-panel hidden"
+                >
+                    <h2>Timer</h2>
+
+                    <div id="timer-display">
+                        00:00
+                    </div>
+
+                    <div class="timer-controls">
+
+                        <button
+                            id="timer-start"
+                            class="glass-button"
+                            type="button"
+                        >
+                            Start
+                        </button>
+
+                        <button
+                            id="timer-pause"
+                            class="glass-button"
+                            type="button"
+                        >
+                            Pause
+                        </button>
+
+                        <button
+                            id="timer-reset"
+                            class="glass-button"
+                            type="button"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+                </div>
+
+
+                <!-- Stopwatch panel -->
+                <div
+                    id="stopwatch-panel"
+                    class="app-panel glass-panel hidden"
+                >
+                    <h2>Stopwatch</h2>
+
+                    <div id="stopwatch-display">
+                        00:00:00
+                    </div>
+
+                    <div class="stopwatch-controls">
+
+                        <button
+                            id="stopwatch-start"
+                            class="glass-button"
+                            type="button"
+                        >
+                            Start
+                        </button>
+
+                        <button
+                            id="stopwatch-stop"
+                            class="glass-button"
+                            type="button"
+                        >
+                            Stop
+                        </button>
+
+                        <button
+                            id="stopwatch-reset"
+                            class="glass-button"
+                            type="button"
+                        >
+                            Reset
+                        </button>
+
+                    </div>
+                </div>
+
+
+                <!-- Reminders panel -->
+                <div
+                    id="reminders-panel"
+                    class="app-panel glass-panel hidden"
+                >
+                    <h2>Reminders</h2>
+
+                    <div id="reminders-list"></div>
+
+                    <button
+                        id="add-reminder"
+                        class="glass-button primary-button"
+                        type="button"
+                    >
+                        Add Reminder
+                    </button>
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =====================================
+             SETUP WIZARD
+             ===================================== -->
+
+        <section
+            id="setup-screen"
+            class="screen setup-screen hidden"
+        >
+
+            <div
+                id="setup-container"
+                class="setup-container glass-panel"
+            >
+
+                <div id="setup-content">
+
+                    <div class="setup-step active" data-step="welcome">
+
+                        <div class="setup-logo">
+                            Beya
+                        </div>
+
+                        <h1>Welcome to Beya</h1>
+
+                        <p>
+                            More than a clock.
+                        </p>
+
+                        <button
+                            id="setup-start"
+                            class="glass-button primary-button"
+                            type="button"
+                        >
+                            Get Started
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="setup-navigation">
+
+                    <button
+                        id="setup-back"
+                        class="glass-button hidden"
+                        type="button"
+                    >
+                        Back
+                    </button>
+
+                    <button
+                        id="setup-next"
+                        class="glass-button primary-button hidden"
+                        type="button"
+                    >
+                        Continue
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="setup-progress"
+                    class="setup-progress"
+                    aria-label="Setup progress"
+                >
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             BEYA AI
+             ===================================== -->
+
+        <aside
+            id="beya-ai-panel"
+            class="ai-panel glass-panel hidden"
+            aria-label="Beya AI"
+        >
+
+            <div class="ai-header">
+
+                <div>
+                    <strong>Beya AI</strong>
+                    <span>Your personal time assistant</span>
+                </div>
+
+                <button
+                    id="ai-close"
+                    class="icon-button"
+                    type="button"
+                    aria-label="Close Beya AI"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                id="ai-messages"
+                class="ai-messages"
+                aria-live="polite"
+            >
+            </div>
+
+
+            <div class="ai-input-area">
+
+                <input
+                    id="ai-input"
+                    type="text"
+                    placeholder="Ask Beya AI..."
+                    autocomplete="off"
+                >
+
+                <button
+                    id="ai-voice"
+                    class="icon-button"
+                    type="button"
+                    aria-label="Use voice"
+                >
+                    🎙
+                </button>
+
+                <button
+                    id="ai-send"
+                    class="glass-button primary-button"
+                    type="button"
+                >
+                    Send
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             NAVIGATION / MENU
+             ===================================== -->
+
+        <nav
+            id="side-menu"
+            class="side-menu glass-panel hidden"
+            aria-label="Beya navigation"
+        >
+
+            <div class="side-menu-header">
+
+                <span>Beya</span>
+
+                <button
+                    id="close-menu"
+                    class="icon-button"
+                    type="button"
+                    aria-label="Close menu"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <button
+                class="menu-item"
+                data-panel="clock"
+                type="button"
+            >
+                Clock
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="alarms"
+                type="button"
+            >
+                Alarms
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="timer"
+                type="button"
+            >
+                Timer
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="stopwatch"
+                type="button"
+            >
+                Stopwatch
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="reminders"
+                type="button"
+            >
+                Reminders
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="calendar"
+                type="button"
+            >
+                Calendar
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="world-clocks"
+                type="button"
+            >
+                World Clocks
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="handwriting"
+                type="button"
+            >
+                Handwriting Clock
+            </button>
+
+            <button
+                class="menu-item"
+                data-panel="settings"
+                type="button"
+            >
+                Settings
+            </button>
+
+        </nav>
+
+
+        <!-- =====================================
+             GLOBAL NOTIFICATION
+             ===================================== -->
+
+        <div
+            id="notification"
+            class="notification glass-panel hidden"
+            role="status"
+            aria-live="polite"
+        >
+            <span id="notification-text"></span>
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT MODULES
+         ========================================= -->
+
+    <script type="module" src="js/storage.js"></script>
+    <script type="module" src="js/clock.js"></script>
+    <script type="module" src="js/alarms.js"></script>
+    <script type="module" src="js/timer.js"></script>
+    <script type="module" src="js/stopwatch.js"></script>
+    <script type="module" src="js/reminders.js"></script>
+    <script type="module" src="js/settings.js"></script>
+    <script type="module" src="js/setup.js"></script>
+    <script type="module" src="js/app.js"></script>
+
+</body>
+</html>
